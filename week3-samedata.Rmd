@@ -1,0 +1,22 @@
+# Load the Anscombe's quartet data
+https://en.wikipedia.org/wiki/Anscombe%27s_quartet 
+Anscombe's quartet comprises four data sets that have nearly identical simple descriptive statistics, yet have very different distributions and appear very different when graphed 
+```{r}
+library(Tmisc)
+data(quartet)
+print(quartet)
+```
+
+Now review the mean and sd of each set
+```{r}
+quartet %>% 
+  group_by(set) %>% 
+  summarize(mean(x), sd(x), mean(y), sd(y), cor(x,y))
+```
+# Plotting them to see the different
+```{r}
+ggplot(quartet, aes(x,y)) + geom_point() + geom_smooth(method = lm, se = FALSE) + facet_wrap(~set)
+```
+
+
+
