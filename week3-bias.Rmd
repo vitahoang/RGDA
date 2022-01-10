@@ -1,0 +1,7 @@
+```{r}
+library(SimDesign)
+actual_temp <- c(68.3, 70, 71, 70.9, 72)
+predicted_temp <- c(67.3, 71.2, 70.9, 71.9, 71.5)
+bias(actual_temp, predicted_temp)
+```
+
