@@ -78,7 +78,7 @@ You decide to use the facet_wrap() function to create a separate plot for each m
 ```{r faceting a plot}
 ggplot(data = hotel_bookings) +
   geom_bar(mapping = aes(x = hotel)) +
-  facet_wrap(~)
+  facet_wrap(vars(market_segment))
 ```
 
 Now you have a separate bar chart for each market segment. Your stakeholder has a clearer idea of the size of each market segment, as well as the corresponding data for each hotel type.
@@ -90,7 +90,6 @@ For the next step, you will need to have the `tidyverse` package installed and l
 If you have already done this because you're using the `tidyverse` package on your own, you can skip this code chunk.
 
 ```{r install and download tidyverse}
-install.packages('tidyverse')
 library(tidyverse)
 ```
 
@@ -104,8 +103,8 @@ For the first step, you can use the `filter()` function to create a data set tha
 
 ```{r filtering a dataset to just city hotels that are online TA}
 onlineta_city_hotels <- filter(hotel_bookings, 
-                           (hotel=="" & 
-                             hotel_bookings$market_segment==""))
+                           (hotel=="City Hotel" & 
+                             hotel_bookings$market_segment=="Online TA"))
 ```
 
 Note that you can use the '&' character to demonstrate that you want two different conditions to be true. Also, you can use the '$' character to specify which column in the data frame 'hotel_bookings' you are referencing (for example, 'market_segment'). 
