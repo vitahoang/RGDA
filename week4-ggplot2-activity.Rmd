@@ -1,0 +1,28 @@
+# Load the Libs
+```{r}
+library(ggplot2)
+library(palmerpenguins)
+```
+
+# Load the data 
+```{r}
+data("penguins")
+View(penguins)
+```
+
+# Create the plot
+```{r}
+ggplot(data = penguins) + geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g))
+```
+
+# Make it more beautiful
+```{r}
+ggplot(penguins, aes(flipper_length_mm, body_mass_g, colour = island)) + geom_point()
+```
+
+# Write a easier to read code
+```{r}
+ggplot(penguins, aes(body_mass_g, flipper_length_mm, colour = island)) 
+  + geom_point()
+```
+
