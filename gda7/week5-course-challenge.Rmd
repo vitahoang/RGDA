@@ -1,0 +1,90 @@
+# Load Data
+
+Before you begin working with your data, you need to import it and save it as a data frame. To get started, you open your RStudio workspace and load the tidyverse library. You upload a .csv file containing the data to RStudio and store it in a project folder named flavors_of_cacao.csv.
+
+```{r load}
+library(tidyverse)
+library(janitor)
+setwd("/Users/vitahoang/Code/RGDA")
+chocolate_df <- read_csv("flavors_of_cacao.csv")
+```
+
+# Preview Data
+
+```{r glimpse}
+glimpse(chocolate_df)
+```
+```{r colname}
+colnames(chocolate_df)
+```
+```{r head}
+head(chocolate_df)
+```
+```{r str}
+str(chocolate_df)
+```
+# Clean Data
+```{r clean column}
+flavors_df <- clean_names(chocolate_df)
+colnames(flavors_df)
+```
+
+```{r rename column}
+flavors_df %>% 
+  rename(company = company_maker_if_known)
+```
+```{r trim}
+trimmed_flavors_df <- flavors_df %>% 
+  select(rating, cocoa_percent, bean_type, company_location)
+print(trimmed_flavors_df)
+```
+
+# Transforming
+```{r calculate}
+trimmed_flavors_df %>% 
+  summarise(sd = sd(rating))
+
+```
+
+```{r trim & convert}
+typeof(trimmed_flavors_df$cocoa_percent)
+cp <- trimmed_flavors_df$cocoa_percent
+trimmed_flavors_df$cocoa_percent <- as.double(substr(cp, 1, nchar(cp) - 1))
+```
+```{r filter}
+best_trimmed_flavors_df <- trimmed_flavors_df %>%
+  filter(cocoa_percent >=80 & rating >=3.75)
+print(best_trimmed_flavors_df)
+```
+
+# Visualization
+```{r mapping aes x}
+ggplot(data = best_trimmed_flavors_df) +
+  geom_bar(mapping = aes(x = rating))
+```
+```{r mapping aes fill}
+ggplot(data = best_trimmed_flavors_df) +
+  geom_bar(mapping = aes(x = company_location, fill = rating))
+```
+
+```{r facet_wrap}
+ggplot(data = best_trimmed_flavors_df) +
+  geom_bar(mapping = aes(x = cocoa_percent)) +
+  facet_wrap(~cocoa_percent)
+
+```
+
+# Annotation
+```{r title}
+ggplot(data = best_trimmed_flavors_df) +
+  geom_point(mapping = aes(x = cocoa_percent, y = rating)) +
+  labs(title = "Recommended Bars")
+
+```
+# Save
+```{r title}
+ggplot(data = best_trimmed_flavors_df) +
+  geom_point(mapping = aes(x = cocoa_percent, y = rating)) +
+  labs(title = "Recommended Bars") +
+  ggsave("chocolate.jpeg")
+```

@@ -22,6 +22,7 @@ If this line causes an error, copy in the line setwd("projects/Course 7/Week 4")
 Run the code below to read in the file 'hotel_bookings.csv' into a data frame: 
 
 ```{r load data}
+setwd("/Users/vitahoang/Code/RGDA")
 hotel_bookings <- read.csv("hotel_bookings.csv")
 ```
 
